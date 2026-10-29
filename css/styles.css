@@ -1,0 +1,378 @@
+/* ==========================================================================
+   Velora Theatre — base styles and page layout
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --color-bg: #f6f3ee;
+  --color-surface: #ffffff;
+  --color-ink: #1f1a17;
+  --color-muted: #6b625b;
+  --color-border: #e3ddd4;
+  --color-accent: #8c1c2b;
+  --color-accent-dark: #6d1521;
+  --color-hall: #221c1a;
+  --color-stage: #c9a35b;
+
+  /* Seat states */
+  --seat-available: #d9cfc2;
+  --seat-inspected: #f2b632;
+  --seat-in-cart: #2e8b57;
+  --seat-unavailable: #5a524d;
+
+  /* Shape and spacing */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --gap: 1rem;
+  --shadow: 0 1px 2px rgba(31, 26, 23, 0.06), 0 4px 14px rgba(31, 26, 23, 0.06);
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-bg);
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 3px solid var(--seat-inspected);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Header and footer
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.site-header__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.site-header__tagline {
+  margin: 0;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+.site-footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Main layout: venue map + sidebar
+   -------------------------------------------------------------------------- */
+
+.app {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--gap);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
+@media (min-width: 960px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: var(--gap);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Venue section
+   -------------------------------------------------------------------------- */
+
+.venue {
+  min-width: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.venue__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.venue__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+}
+
+/* Map navigation toolbar */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.toolbar__group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.tool-btn {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.tool-btn:hover {
+  background: var(--color-border);
+}
+
+.tool-btn--wide {
+  font-size: 0.9rem;
+}
+
+/* The viewport clips the venue; the canvas inside it is what moves and scales */
+.viewport {
+  position: relative;
+  height: clamp(320px, 62vh, 640px);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-hall);
+}
+
+.venue-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 2rem;
+  transform-origin: center top;
+  transform: translateX(-50%);
+}
+
+.stage {
+  width: 60%;
+  min-width: 240px;
+  margin: 0 auto 2.5rem;
+  padding: 0.75rem;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: var(--color-stage);
+  color: var(--color-hall);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.venue-map__placeholder {
+  margin: 0;
+  color: var(--seat-available);
+  text-align: center;
+}
+
+/* Seat state legend */
+.legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend__swatch {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px 4px 2px 2px;
+}
+
+.legend__swatch--available { background: var(--seat-available); }
+.legend__swatch--inspected { background: var(--seat-inspected); }
+.legend__swatch--in-cart { background: var(--seat-in-cart); }
+.legend__swatch--unavailable { background: var(--seat-unavailable); }
+
+/* --------------------------------------------------------------------------
+   Sidebar panels: seat details and cart
+   -------------------------------------------------------------------------- */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.panel__empty {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.badge {
+  min-width: 1.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-accent-dark);
+}
+
+.btn--primary:disabled {
+  background: var(--color-border);
+  color: var(--color-muted);
+}
+
+.cart-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .app {
+    padding: 0.75rem;
+  }
+
+  .venue,
+  .panel {
+    padding: 0.75rem;
+  }
+
+  .viewport {
+    height: 55vh;
+  }
+
+  .toolbar {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

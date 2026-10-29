@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velora Theatre — Ticket Selection</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <p class="brand">Velora Theatre</p>
+      <p class="site-header__tagline">Choose your seats for tonight's performance</p>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- Venue map with navigation controls -->
+    <section class="venue" aria-labelledby="venue-heading">
+      <div class="venue__head">
+        <h1 id="venue-heading" class="venue__title">Seating plan</h1>
+
+        <div class="toolbar" role="toolbar" aria-label="Map navigation">
+          <div class="toolbar__group">
+            <button type="button" class="tool-btn" id="zoom-out" aria-label="Zoom out" title="Zoom out">−</button>
+            <button type="button" class="tool-btn" id="zoom-in" aria-label="Zoom in" title="Zoom in">+</button>
+          </div>
+          <div class="toolbar__group">
+            <button type="button" class="tool-btn" id="move-left" aria-label="Move left" title="Move left">←</button>
+            <button type="button" class="tool-btn" id="move-up" aria-label="Move up" title="Move up">↑</button>
+            <button type="button" class="tool-btn" id="move-down" aria-label="Move down" title="Move down">↓</button>
+            <button type="button" class="tool-btn" id="move-right" aria-label="Move right" title="Move right">→</button>
+          </div>
+          <button type="button" class="tool-btn tool-btn--wide" id="reset-view">Reset view</button>
+        </div>
+      </div>
+
+      <div class="viewport" id="viewport">
+        <div class="venue-canvas" id="venue-canvas">
+          <div class="stage">Stage</div>
+          <!-- Sections, rows and seats are generated from JavaScript venue data -->
+          <div class="venue-map" id="venue-map">
+            <p class="venue-map__placeholder">Seating map loading…</p>
+          </div>
+        </div>
+      </div>
+
+      <ul class="legend" aria-label="Seat states">
+        <li class="legend__item"><span class="legend__swatch legend__swatch--available"></span>Available</li>
+        <li class="legend__item"><span class="legend__swatch legend__swatch--inspected"></span>Selected</li>
+        <li class="legend__item"><span class="legend__swatch legend__swatch--in-cart"></span>In cart</li>
+        <li class="legend__item"><span class="legend__swatch legend__swatch--unavailable"></span>Unavailable</li>
+      </ul>
+    </section>
+
+    <aside class="sidebar">
+      <!-- Details of the seat the user is inspecting -->
+      <section class="panel" aria-labelledby="details-heading">
+        <h2 id="details-heading" class="panel__title">Seat details</h2>
+        <div id="seat-details" aria-live="polite">
+          <p class="panel__empty">Click a seat on the map to see its details and price.</p>
+        </div>
+        <button type="button" class="btn btn--primary" id="add-to-cart" disabled>Add to cart</button>
+      </section>
+
+      <!-- Tickets the user has added -->
+      <section class="panel" aria-labelledby="cart-heading">
+        <h2 id="cart-heading" class="panel__title">
+          Your cart <span class="badge" id="cart-count">0</span>
+        </h2>
+        <ul class="cart-list" id="cart-list"></ul>
+        <p class="panel__empty" id="cart-empty">Your cart is empty.</p>
+        <div class="cart-total">
+          <span>Total</span>
+          <output id="cart-total">₼0.00</output>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>Web &amp; Mobile I — Interactive Venue Ticketing System</p>
+  </footer>
+</body>
+</html>
