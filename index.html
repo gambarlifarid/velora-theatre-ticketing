@@ -45,12 +45,17 @@
         </div>
       </div>
 
-      <ul class="legend" aria-label="Seat states">
-        <li class="legend__item"><span class="legend__swatch legend__swatch--available"></span>Available</li>
-        <li class="legend__item"><span class="legend__swatch legend__swatch--inspected"></span>Selected</li>
-        <li class="legend__item"><span class="legend__swatch legend__swatch--in-cart"></span>In cart</li>
-        <li class="legend__item"><span class="legend__swatch legend__swatch--unavailable"></span>Unavailable</li>
-      </ul>
+      <div class="legends">
+        <!-- Price categories are generated from the venue data -->
+        <ul class="legend" id="price-legend" aria-label="Price categories"></ul>
+
+        <ul class="legend" aria-label="Seat states">
+          <li class="legend__item"><span class="legend__swatch legend__swatch--available"></span>Available</li>
+          <li class="legend__item"><span class="legend__swatch legend__swatch--inspected"></span>Selected</li>
+          <li class="legend__item"><span class="legend__swatch legend__swatch--in-cart"></span>In cart</li>
+          <li class="legend__item"><span class="legend__swatch legend__swatch--unavailable"></span>Unavailable</li>
+        </ul>
+      </div>
     </section>
 
     <aside class="sidebar">
@@ -84,6 +89,7 @@
 
   <script src="js/venue-data.js"></script>
   <script src="js/venue-model.js"></script>
+  <script src="js/render.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -32,7 +32,8 @@ const VENUE = {
       id: 'boxes',
       name: 'Boxes',
       level: 'Ground floor, beside the stage',
-      layout: 'sides', // blocks are split to the left and right of the stage
+      layout: 'sides',      // blocks are split to the left and right...
+      besideSection: 'stalls', // ...of the Stalls
       rows: ['A', 'B'],
       blocks: [
         { id: 'box1', name: 'Box 1', seats: 3, side: 'left' },

@@ -12,6 +12,7 @@
   --color-accent: #8c1c2b;
   --color-accent-dark: #6d1521;
   --color-hall: #221c1a;
+  --color-hall-ink: #f6f3ee;
   --color-stage: #c9a35b;
 
   /* Seat states */
@@ -213,6 +214,7 @@ button:disabled {
   position: absolute;
   top: 0;
   left: 50%;
+  width: max-content;
   padding: 2rem;
   transform-origin: center top;
   transform: translateX(-50%);
@@ -239,7 +241,139 @@ button:disabled {
   text-align: center;
 }
 
-/* Seat state legend */
+/* --------------------------------------------------------------------------
+   Generated venue map: sections, rows, blocks and seats
+   -------------------------------------------------------------------------- */
+
+.venue-map {
+  --seat-size: 22px;
+  --seat-gap: 3px;
+  --aisle: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  color: var(--color-hall-ink);
+}
+
+/* Stalls with the boxes on either side */
+.venue-level {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+
+.seat-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--seat-gap);
+}
+
+.seat-section__title {
+  margin-bottom: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: normal;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.seat-section__level {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  opacity: 0.55;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--aisle);
+}
+
+.seat-row__label {
+  width: 1rem;
+  font-size: 0.7rem;
+  text-align: center;
+  opacity: 0.55;
+}
+
+.seat-block {
+  display: flex;
+  gap: var(--seat-gap);
+}
+
+.seat {
+  width: var(--seat-size);
+  height: var(--seat-size);
+  padding: 0;
+  border: none;
+  border-radius: 7px 7px 3px 3px;
+  background: var(--seat-color, var(--seat-available));
+  color: rgba(31, 26, 23, 0.7);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.seat:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
+}
+
+.seat--unavailable {
+  background: var(--seat-unavailable);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}
+
+.seat--unavailable:hover {
+  transform: none;
+  filter: none;
+}
+
+/* Boxes beside the stalls */
+.box-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--seat-gap);
+  padding: 0.5rem 0.4rem;
+  border: 1px solid rgba(246, 243, 238, 0.15);
+  border-radius: 8px;
+}
+
+.box__title {
+  margin: 0 0 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Price and seat state legends */
+.legends {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
 .legend {
   margin: 0;
   padding: 0;
@@ -263,7 +397,10 @@ button:disabled {
   border-radius: 4px 4px 2px 2px;
 }
 
-.legend__swatch--available { background: var(--seat-available); }
+/* Available seats are coloured by price category, so the swatch shows all of them */
+.legend__swatch--available {
+  background: linear-gradient(90deg, #e8dcc4 25%, #c85a7c 25% 50%, #6c8ebf 50% 75%, #9a8bc4 75%);
+}
 .legend__swatch--inspected { background: var(--seat-inspected); }
 .legend__swatch--in-cart { background: var(--seat-in-cart); }
 .legend__swatch--unavailable { background: var(--seat-unavailable); }

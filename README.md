@@ -19,6 +19,7 @@ index.html          Page structure: venue map, map controls, seat details, cart
 css/styles.css      Layout, colours, seat states and responsive rules
 js/venue-data.js    The venue described as data: sections, rows, blocks, prices, unavailable seats
 js/venue-model.js   Expands the venue data into individual seat objects
+js/render.js        Draws sections, rows, aisles, boxes and seat buttons from the data
 js/app.js           Entry point that starts the application
 ```
 
@@ -37,7 +38,7 @@ js/app.js           Entry point that starts the application
 
 - [x] Page layout: header, venue map area, navigation toolbar, seat details panel, cart panel
 - [x] Venue data model (sections, rows, price categories)
-- [ ] Generate seats from data
+- [x] Generate seats from data
 - [ ] Seat inspection and seat states
 - [ ] Zoom, move and reset view controls
 - [ ] Add to cart, remove, totals
