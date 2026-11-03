@@ -67,3 +67,4 @@ document.addEventListener('keydown', (event) => {
 
 renderVenue(VENUE, seatIndex, venueMap);
 renderPriceLegend(VENUE, document.getElementById('price-legend'));
+setupMapControls(); // after rendering, so the venue size is known

@@ -197,8 +197,25 @@ button:disabled {
   background: var(--color-border);
 }
 
+.tool-btn:disabled {
+  opacity: 0.4;
+}
+
+.tool-btn:disabled:hover {
+  background: var(--color-bg);
+}
+
 .tool-btn--wide {
   font-size: 0.9rem;
+}
+
+.zoom-level {
+  min-width: 3.2rem;
+  align-self: center;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--color-muted);
 }
 
 /* The viewport clips the venue; the canvas inside it is what moves and scales */
@@ -210,14 +227,15 @@ button:disabled {
   background: var(--color-hall);
 }
 
+/* Positioned by js/viewport.js through translate() and scale() */
 .venue-canvas {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0;
   width: max-content;
   padding: 2rem;
-  transform-origin: center top;
-  transform: translateX(-50%);
+  transform-origin: 0 0;
+  transition: transform 0.25s ease;
 }
 
 .stage {
