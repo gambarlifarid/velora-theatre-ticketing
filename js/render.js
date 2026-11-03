@@ -18,6 +18,7 @@ function createSeatButton(seat) {
   const button = createElement('button', 'seat', seat.number);
   button.type = 'button';
   button.dataset.seatId = seat.id;
+  button.setAttribute('aria-pressed', 'false'); // true while the seat is being inspected
   button.style.setProperty('--seat-color', VENUE.priceCategories[seat.category].color);
 
   let label = `${describeSeat(seat)}, ${seat.categoryLabel}, ${formatPrice(seat.price)}`;
