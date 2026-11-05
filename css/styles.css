@@ -369,6 +369,19 @@ button:disabled {
   filter: none;
 }
 
+.seat--in-cart,
+.seat--in-cart:hover {
+  background: var(--seat-in-cart);
+  color: #fff;
+}
+
+/* An inspected seat that is in the cart stays green, with the inspection ring */
+.seat--in-cart.seat--inspected {
+  background: var(--seat-in-cart);
+  color: #fff;
+  box-shadow: 0 0 0 2px var(--seat-inspected);
+}
+
 /* An unavailable seat can be inspected but keeps its grey colour */
 .seat--unavailable.seat--inspected {
   background: var(--seat-unavailable);
@@ -537,6 +550,12 @@ button:disabled {
   color: #23633f;
 }
 
+.seat-status--in-cart {
+  background: #e3f1e8;
+  color: #1f6b42;
+  font-weight: 600;
+}
+
 .seat-status--unavailable {
   background: #efeceb;
   color: var(--seat-unavailable);
@@ -570,6 +589,46 @@ button:disabled {
   margin: 0;
   padding: 0;
   list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.cart-list:empty {
+  display: none;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.cart-item__meta {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.cart-item__price {
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .cart-total {

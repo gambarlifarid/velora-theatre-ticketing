@@ -4,6 +4,7 @@
 
 const STATUS_MESSAGES = {
   available: 'Available — not in your cart yet',
+  'in-cart': 'In your cart',
   unavailable: 'Unavailable — this seat cannot be booked',
 };
 
