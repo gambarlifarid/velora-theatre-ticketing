@@ -21,7 +21,8 @@ js/venue-data.js    The venue described as data: sections, rows, blocks, prices,
 js/venue-model.js   Expands the venue data into individual seat objects
 js/render.js        Draws sections, rows, aisles, boxes and seat buttons from the data
 js/details.js       Fills the seat details panel for the inspected seat
-js/cart.js          Cart list, ticket count and total price
+js/cart.js          Cart list, ticket count, total price and remove buttons
+js/storage.js       Saves the cart to localStorage and restores it on page load
 js/viewport.js      Zoom, move and reset view controls for the map
 js/app.js           Entry point that starts the application
 ```
@@ -45,7 +46,7 @@ js/app.js           Entry point that starts the application
 - [x] Seat inspection and seat states
 - [x] Zoom, move and reset view controls
 - [x] Add to cart with duplicate prevention, cart list and total
-- [ ] Remove tickets from the cart
-- [ ] localStorage persistence
+- [x] Remove tickets from the cart, with the seat updated on the map
+- [x] localStorage persistence
 - [ ] Responsive polish and edge cases
 - [ ] Bonus: mouse-wheel zoom and drag panning

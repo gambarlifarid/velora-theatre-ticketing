@@ -31,7 +31,12 @@ function createCartItem(seat) {
     createElement('span', 'cart-item__meta', `${seat.categoryLabel} · ${seat.sectionName}`)
   );
 
-  item.append(swatch, info, createElement('span', 'cart-item__price', formatPrice(seat.price)));
+  const removeButton = createElement('button', 'cart-item__remove', '×');
+  removeButton.type = 'button';
+  removeButton.setAttribute('aria-label', `Remove ${describeSeat(seat)} from cart`);
+  removeButton.title = 'Remove from cart';
+
+  item.append(swatch, info, createElement('span', 'cart-item__price', formatPrice(seat.price)), removeButton);
   return item;
 }
 

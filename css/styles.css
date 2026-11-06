@@ -631,6 +631,25 @@ button:disabled {
   white-space: nowrap;
 }
 
+.cart-item__remove {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.cart-item__remove:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
+}
+
 .cart-total {
   display: flex;
   justify-content: space-between;

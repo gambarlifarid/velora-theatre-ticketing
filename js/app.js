@@ -8,7 +8,7 @@ const seatIndex = buildSeatIndex(VENUE);
 // Everything that can change while the page is open
 const state = {
   inspectedSeatId: null,
-  cart: [], // seat IDs, in the order they were added
+  cart: loadCart(seatIndex), // seat IDs in the order they were added, restored from localStorage
 };
 
 const venueMap = document.getElementById('venue-map');
@@ -65,8 +65,20 @@ function addToCart(seatId) {
   if (!seat || getSeatStatus(seat) !== 'available') return;
 
   state.cart.push(seatId);
+  saveCart(state.cart);
   updateSeatButton(seatId);
   updateDetailsPanel();
+  renderCart();
+}
+
+/** Removes a ticket from the cart and immediately frees the seat on the map. */
+function removeFromCart(seatId) {
+  if (!state.cart.includes(seatId)) return;
+
+  state.cart = state.cart.filter((id) => id !== seatId);
+  saveCart(state.cart);
+  updateSeatButton(seatId);
+  updateDetailsPanel(); // in case the removed seat is the one being inspected
   renderCart();
 }
 
@@ -84,11 +96,23 @@ addToCartButton.addEventListener('click', () => {
   if (state.inspectedSeatId) addToCart(state.inspectedSeatId);
 });
 
+// One listener for every remove button in the cart
+cartList.addEventListener('click', (event) => {
+  const removeButton = event.target.closest('.cart-item__remove');
+  if (!removeButton) return;
+
+  removeFromCart(removeButton.closest('.cart-item').dataset.seatId);
+});
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && state.inspectedSeatId) inspectSeat(null);
 });
 
 renderVenue(VENUE, seatIndex, venueMap);
 renderPriceLegend(VENUE, document.getElementById('price-legend'));
+
+// Restore the saved cart: mark its seats on the map and store the cleaned-up list back
+state.cart.forEach(updateSeatButton);
+saveCart(state.cart);
 renderCart();
 setupMapControls(); // after rendering, so the venue size is known
