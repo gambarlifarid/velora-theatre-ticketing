@@ -40,6 +40,18 @@ function createCartItem(seat) {
   return item;
 }
 
+/**
+ * After a ticket is removed its button disappears, so move keyboard focus to the
+ * next ticket's remove button (or the cart heading when the cart is now empty).
+ */
+function focusCartAfterRemoval(removedIndex) {
+  const removeButtons = cartList.querySelectorAll('.cart-item__remove');
+  const next = removeButtons[Math.min(removedIndex, removeButtons.length - 1)];
+
+  if (next) next.focus();
+  else document.getElementById('cart-heading').focus();
+}
+
 /** Redraws the cart list, count and total from state.cart. */
 function renderCart() {
   const seats = getCartSeats();

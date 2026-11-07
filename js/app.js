@@ -101,11 +101,27 @@ cartList.addEventListener('click', (event) => {
   const removeButton = event.target.closest('.cart-item__remove');
   if (!removeButton) return;
 
-  removeFromCart(removeButton.closest('.cart-item').dataset.seatId);
+  const item = removeButton.closest('.cart-item');
+  const index = [...cartList.children].indexOf(item);
+
+  removeFromCart(item.dataset.seatId);
+  focusCartAfterRemoval(index);
 });
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && state.inspectedSeatId) inspectSeat(null);
+});
+
+// If the cart is changed in another tab, load the new cart so both tabs show the same seats
+window.addEventListener('storage', (event) => {
+  if (event.key !== CART_STORAGE_KEY) return;
+
+  const previousCart = state.cart;
+  state.cart = loadCart(seatIndex);
+
+  new Set([...previousCart, ...state.cart]).forEach(updateSeatButton);
+  updateDetailsPanel();
+  renderCart();
 });
 
 renderVenue(VENUE, seatIndex, venueMap);

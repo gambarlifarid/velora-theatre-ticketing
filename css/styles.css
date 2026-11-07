@@ -673,12 +673,27 @@ button:disabled {
     padding: 0.75rem;
   }
 
+  /* A square map area fits the venue's shape better than a tall one on phones */
   .viewport {
-    height: 55vh;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    min-height: 280px;
+    max-height: 70vh;
   }
 
   .toolbar {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: no animated panning, zooming or seat hover effects
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .venue-canvas,
+  .seat {
+    transition: none;
   }
 }

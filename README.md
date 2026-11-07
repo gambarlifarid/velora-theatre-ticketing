@@ -48,5 +48,18 @@ js/app.js           Entry point that starts the application
 - [x] Add to cart with duplicate prevention, cart list and total
 - [x] Remove tickets from the cart, with the seat updated on the map
 - [x] localStorage persistence
-- [ ] Responsive polish and edge cases
+- [x] Responsive polish and edge cases
 - [ ] Bonus: mouse-wheel zoom and drag panning
+
+## Keyboard
+
+While focus is inside the seating plan:
+
+| Key            | Action                   |
+|----------------|--------------------------|
+| `+` / `−`      | Zoom in / out            |
+| Arrow keys     | Move the map             |
+| `0`            | Reset / centre the view  |
+| `Tab`          | Move between seats (the map follows the focused seat) |
+| `Enter`        | Inspect the focused seat |
+| `Esc`          | Close the seat inspection |

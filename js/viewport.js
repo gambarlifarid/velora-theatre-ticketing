@@ -97,6 +97,22 @@ function resetView() {
   applyView();
 }
 
+/** Pans just enough to bring an element (e.g. a seat reached with Tab) inside the viewport. */
+function keepInView(element) {
+  const view = viewportElement.getBoundingClientRect();
+  const box = element.getBoundingClientRect();
+  let dx = 0;
+  let dy = 0;
+
+  if (box.left < view.left + EDGE_MARGIN) dx = box.left - view.left - EDGE_MARGIN;
+  else if (box.right > view.right - EDGE_MARGIN) dx = box.right - view.right + EDGE_MARGIN;
+
+  if (box.top < view.top + EDGE_MARGIN) dy = box.top - view.top - EDGE_MARGIN;
+  else if (box.bottom > view.bottom - EDGE_MARGIN) dy = box.bottom - view.bottom + EDGE_MARGIN;
+
+  if (dx || dy) moveBy(dx, dy);
+}
+
 /** Connects the toolbar buttons and starts with the whole venue in view. */
 function setupMapControls() {
   const moveStepX = () => viewportElement.clientWidth * MOVE_FRACTION;
@@ -109,6 +125,39 @@ function setupMapControls() {
   document.getElementById('move-left').addEventListener('click', () => moveBy(-moveStepX(), 0));
   document.getElementById('move-right').addEventListener('click', () => moveBy(moveStepX(), 0));
   document.getElementById('reset-view').addEventListener('click', resetView);
+
+  // Keyboard shortcuts while focus is inside the seating plan: + / − zoom, arrows move, 0 resets
+  const keyActions = {
+    '+': () => zoomBy(ZOOM_STEP),
+    '=': () => zoomBy(ZOOM_STEP),
+    '-': () => zoomBy(1 / ZOOM_STEP),
+    '0': resetView,
+    ArrowUp: () => moveBy(0, -moveStepY()),
+    ArrowDown: () => moveBy(0, moveStepY()),
+    ArrowLeft: () => moveBy(-moveStepX(), 0),
+    ArrowRight: () => moveBy(moveStepX(), 0),
+  };
+
+  document.querySelector('.venue').addEventListener('keydown', (event) => {
+    const action = keyActions[event.key];
+    if (!action || event.ctrlKey || event.metaKey || event.altKey) return;
+
+    event.preventDefault(); // stop the arrow keys from scrolling the page
+    action();
+  });
+
+  // When a seat gets keyboard focus, the browser would scroll the clipped viewport
+  // and break the transform. Undo that scroll and pan the seat into view instead.
+  viewportElement.addEventListener('focusin', (event) => {
+    viewportElement.scrollTop = 0;
+    viewportElement.scrollLeft = 0;
+    // Only for keyboard focus; a seat clicked with the mouse is already visible
+    if (event.target.matches(':focus-visible')) keepInView(event.target);
+  });
+  viewportElement.addEventListener('scroll', () => {
+    viewportElement.scrollTop = 0;
+    viewportElement.scrollLeft = 0;
+  });
 
   // When the window size changes, refit if the user has not navigated, otherwise just re-check the limits
   window.addEventListener('resize', () => {
